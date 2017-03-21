@@ -8,12 +8,10 @@ package codigo;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 /**
@@ -23,8 +21,8 @@ import javax.swing.Timer;
 public class VentanaJuego extends javax.swing.JFrame {
     
     boolean gameOver = false;
-    
-    Pajaro miPajaro = new Pajaro(30, Color.WHITE);
+    boolean comienzoJuego = false;
+    Pajaro miPajaro = new Pajaro(30, Color.green);
 
     static int ANCHOPANTALLA = 400;
     static int ALTOPANTALLA = 750;
@@ -56,14 +54,17 @@ public class VentanaJuego extends javax.swing.JFrame {
         initComponents();
         inicializaBuffers();
         temporizador.start();
-        
+        panelInicio.setSize(400,300);
+        panelInicio.setLocation(10, 200);
+        panelFinal.setSize(400,300);
+        panelFinal.setLocation(10, 200);
     }
     
 
     
     private void inicializaBuffers(){
-        lienzoGraphics = (Graphics2D) jPanel1.getGraphics();
-        buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
+        lienzoGraphics = (Graphics2D) texto.getGraphics();
+        buffer = (BufferedImage) texto.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         bufferGraphics = buffer.createGraphics();
         
         bufferGraphics.setColor(Color.BLACK);
@@ -71,9 +72,11 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
     
     private void bucleDelJuego(){
-        if (miPajaro.chequeaColision(miColumna1)){temporizador.stop();}
-        if (miPajaro.chequeaColision(miColumna2)){temporizador.stop();}
-        if (miPajaro.chequeaColision(miColumna3)){temporizador.stop();}
+        if(!comienzoJuego){temporizador.stop(); panelInicio.setVisible(true);}
+        if(comienzoJuego){temporizador.start();}
+        if (miPajaro.chequeaColision(miColumna1)){temporizador.stop(); panelFinal.setVisible(true);}
+        if (miPajaro.chequeaColision(miColumna2)){temporizador.stop();panelFinal.setVisible(true);}
+        if (miPajaro.chequeaColision(miColumna3)){temporizador.stop();panelFinal.setVisible(true);}
         
         //limpio la pantalla
         bufferGraphics.setColor(Color.BLACK);
@@ -97,7 +100,80 @@ public class VentanaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelInicio = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        comenzar = new javax.swing.JButton();
+        panelFinal = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        texto = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 255));
+        jLabel1.setText("     FLAPPY BIRD");
+
+        comenzar.setText("COMENZAR");
+        comenzar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comenzarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelInicioLayout = new javax.swing.GroupLayout(panelInicio.getContentPane());
+        panelInicio.getContentPane().setLayout(panelInicioLayout);
+        panelInicioLayout.setHorizontalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        panelInicioLayout.setVerticalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 118, Short.MAX_VALUE))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel3.setText("     GAME OVER");
+
+        jButton1.setText("RESTART");
+
+        jButton2.setText("SALIR");
+
+        javax.swing.GroupLayout panelFinalLayout = new javax.swing.GroupLayout(panelFinal.getContentPane());
+        panelFinal.getContentPane().setLayout(panelFinalLayout);
+        panelFinalLayout.setHorizontalGroup(
+            panelFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFinalLayout.createSequentialGroup()
+                .addGroup(panelFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelFinalLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelFinalLayout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addGroup(panelFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+        panelFinalLayout.setVerticalGroup(
+            panelFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFinalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(143, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -106,29 +182,38 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+        javax.swing.GroupLayout textoLayout = new javax.swing.GroupLayout(texto);
+        texto.setLayout(textoLayout);
+        textoLayout.setHorizontalGroup(
+            textoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        textoLayout.setVerticalGroup(
+            textoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 602, Short.MAX_VALUE)
         );
+
+        jLabel2.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel2.setText("Para empezar pulsa \"SPACE\"");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(texto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(texto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(217, 217, 217)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -137,8 +222,18 @@ public class VentanaJuego extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
        if (evt.getKeyCode() == KeyEvent.VK_SPACE){
            miPajaro.yVelocidad += 8;
+           temporizador.restart();
+           comienzoJuego = true;
+           texto.setVisible(false);
+        }
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+           miPajaro.yVelocidad += 15;
        }
     }//GEN-LAST:event_formKeyPressed
+
+    private void comenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarActionPerformed
+        panelInicio.setVisible(false);
+    }//GEN-LAST:event_comenzarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,6 +271,14 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton comenzar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JDialog panelFinal;
+    private javax.swing.JDialog panelInicio;
+    private javax.swing.JPanel texto;
     // End of variables declaration//GEN-END:variables
 }
