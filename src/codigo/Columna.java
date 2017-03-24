@@ -22,30 +22,23 @@ public class Columna {
     
     Rectangle2D capitel, base;
     Ellipse2D circuloInferior,circuloSuperior;
-    int hueco = 80;
-    int altura_columna = 500;
-    int ancho_columna = 79;
+    int hueco = 130;
+    int altura_columna = 200;
+    int ancho_columna = 35;
     private int ancho_pantalla;
     Image col_abajo, col_arriba;
+    Temporizador miTemporizador = new Temporizador();
         
     public Columna (int _ancho, int _anchoPantalla){
+        
+        //Cremos el Random  y Elegimos  con el RANDOM el rango de la columna de  arriba "Capitel"
         Random aleatorio = new Random();
-        int desplazamiento = aleatorio.nextInt(200);
-        capitel = new Rectangle2D.Double(_ancho, -desplazamiento-ancho_columna, ancho_columna, altura_columna);
-        base = new Rectangle2D.Double(_ancho, 
-                                      altura_columna + hueco - desplazamiento + ancho_columna/2, 
-                                      ancho_columna, 
-                                      altura_columna);
-        circuloInferior = new Ellipse2D.Double(_ancho,
-                                                altura_columna + hueco - desplazamiento,
-                                                ancho_columna,
-                                                ancho_columna
-                                                    );
-        circuloSuperior = new Ellipse2D.Double(_ancho,
-                                                altura_columna -hueco - desplazamiento-ancho_columna/2,
-                                                ancho_columna,
-                                                ancho_columna
-                                                    );
+        int altura = aleatorio.nextInt(50);
+        //--
+        
+        capitel = new Rectangle2D.Double(_ancho, -altura-hueco, ancho_columna , altura_columna);
+         base = new Rectangle2D.Double(_ancho, altura_columna + hueco - altura, ancho_columna, altura_columna );
+
         ancho_pantalla = _anchoPantalla;
         precargaImagenes();
     }
@@ -53,62 +46,36 @@ public class Columna {
     private void precargaImagenes(){
          
         col_abajo = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/pipe_bottom.png"))
+                getClass().getResource("/imagenes/edificio.png"))
                 .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
                 .getImage();
-        col_arriba = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/pipe_top.png"))
-                .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
-                .getImage();       
-        
+//        col_arriba = (new ImageIcon(new ImageIcon(
+//                getClass().getResource("/imagenes/pipe_top.png"))
+//                .getImage().getScaledInstance(79, 500, Image.SCALE_DEFAULT)))
+//                .getImage();       
+//        
     }
     
     public void mueve(Graphics2D g2){
         mueveColumna();
-        //mueveColumna(base);
-        
-        
-        //g2.fill(base);    
-        
-        g2.drawImage(col_abajo, (int)base.getX(), (int)base.getY()-ancho_columna/2, null);
-        g2.drawImage(col_arriba, (int)capitel.getX(), (int)capitel.getY()-ancho_columna/2, null);
-        
-        g2.setColor(Color.blue);
-        g2.fill(circuloInferior);
-        g2.fill(circuloSuperior);
-        g2.setColor(Color.pink);
-        g2.fill(capitel);
-        g2.fill(base);
+        g2.drawImage(col_abajo,(int) base.getX(),(int) base.getY(),null);
+        g2.setColor(Color.RED);  
+        g2.fill(capitel);     
+//        g2.fill(base);
     }
     
     private void mueveColumna(){
         if (capitel.getX() + ancho_columna < 0){
             Random aleatorio = new Random();
-            int desplazamiento = aleatorio.nextInt(300);
-            capitel.setFrame(ancho_pantalla, 
-                            -desplazamiento,
-                            capitel.getWidth(), 
-                            capitel.getHeight());
-            base.setFrame(ancho_pantalla, 
-                            altura_columna + hueco - desplazamiento + ancho_columna/2,
-                            base.getWidth(), 
-                            base.getHeight());
-            circuloInferior.setFrame(ancho_pantalla, 
-                                        altura_columna + hueco - desplazamiento,
-                                        ancho_columna,
-                                        ancho_columna
-                                            );
-            circuloSuperior.setFrame(ancho_pantalla , 
-                                        altura_columna - desplazamiento-ancho_columna/2,
-                                        ancho_columna,
-                                        ancho_columna
-                                            );
+            int desplazamiento = aleatorio.nextInt(50);
+            
+         capitel.setFrame(ancho_pantalla, -desplazamiento-hueco, capitel.getWidth() , capitel.getHeight());
+         base.setFrame(ancho_pantalla, altura_columna + hueco - desplazamiento, base.getWidth(), base.getHeight() );
+
         }
         else{
             capitel.setFrame(capitel.getX()-1, capitel.getY(),capitel.getWidth(), capitel.getHeight());
             base.setFrame(base.getX()-1, base.getY(),base.getWidth(), base.getHeight());
-            circuloInferior.setFrame(circuloInferior.getX()-1, circuloInferior.getY(),circuloInferior.getWidth(), circuloInferior.getHeight());
-            circuloSuperior.setFrame(circuloSuperior.getX()-1, circuloSuperior.getY(),circuloSuperior.getWidth(), circuloSuperior.getHeight());
         }
     }
 }

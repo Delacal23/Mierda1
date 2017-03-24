@@ -30,11 +30,11 @@ public class Pajaro extends Ellipse2D.Double{
     private void precargaImagenes(){
          
         mosca = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/fly1.png"))
+                getClass().getResource("/imagenes/fly1.gif"))
                 .getImage().getScaledInstance(radio,radio, Image.SCALE_DEFAULT)))
                 .getImage();
         mosca2 = (new ImageIcon(new ImageIcon(
-                getClass().getResource("/imagenes/fly2.png"))
+                getClass().getResource("/imagenes/fly2.gif"))
                 .getImage().getScaledInstance(radio,radio, Image.SCALE_DEFAULT)))
                 .getImage();
         
@@ -59,23 +59,9 @@ public class Pajaro extends Ellipse2D.Double{
     }
     
     public boolean chequeaColision(Columna c){
-        Area areaPajaro = new Area(this);
-        Area areaPajaro2 = new Area(this);
-        Area areaCirculo = new Area(c.circuloInferior);
-        Area areaCirculo2 = new Area(c.circuloSuperior);
-        boolean choca = true;
-        areaPajaro.intersect(areaCirculo);
-        areaPajaro2.intersect(areaCirculo2);
-       
-        if (areaPajaro.isEmpty()){
-            choca = false;
-        }
-        if (areaPajaro2.isEmpty()){
-            choca = false;
-        }
+ 
         return (this.intersects(c.capitel) || 
-                this.intersects(c.base) ||
-                choca
+                this.intersects(c.base) 
                 );
     }
 
