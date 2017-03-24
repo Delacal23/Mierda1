@@ -24,9 +24,9 @@ public class Obstaculos {
     int altura_columna = 200;
     int ancho_columna = 80;
     private int ancho_pantalla;
-    Image kong;
+    Image pacman;
     Rectangle2D columnaChoque;
-Random aleatorio = new Random();  
+   Random aleatorio = new Random();  
 
     
 
@@ -38,27 +38,23 @@ Random aleatorio = new Random();
         obstaculo = new Rectangle2D.Double(_ancho, altura_columna + desplazamientoMas -desplazamientoMenos -50, 40, 40);
         
         ancho_pantalla = _anchoPantalla;
-//        precargaImagenes();
+        precargaImagenes();
     }
   
     public void mueve(Graphics2D g2){
-        mueveColumna();
-        //mueveColumna(base);
-        
-        g2.fill(obstaculo);
+        mueveColumna();        
+//        g2.fill(obstaculo);
        
-//        g2.drawImage(kong, (int)obstaculo.getX(), (int)obstaculo.getY(), null);
-        
+        g2.drawImage(pacman, (int)obstaculo.getX(), (int)obstaculo.getY(), null);       
     }
-    
-    
-//     private void precargaImagenes(){
-//        kong = (new ImageIcon(new ImageIcon(
-//                getClass().getResource("/imagenes/kingkong.png"))
-//                .getImage().getScaledInstance(60,60,Image.SCALE_DEFAULT)))
-//                .getImage();         
-//                
-//    }
+  
+     private void precargaImagenes(){
+        pacman = (new ImageIcon(new ImageIcon(
+                getClass().getResource("/imagenes/pacman.png"))
+                .getImage().getScaledInstance(60,60,Image.SCALE_DEFAULT)))
+                .getImage();         
+                
+    }
     
     
     private void mueveColumna(){

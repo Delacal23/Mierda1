@@ -27,8 +27,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     boolean gameOver = false;
     boolean comienzoJuego = false;
     Pajaro miPajaro = new Pajaro(50, Color.green);
-    Obstaculos miObstaculos = new Obstaculos(ANCHOPANTALLA, ANCHOPANTALLA);
-    
+    Obstaculos miObstaculos = new Obstaculos(ANCHOPANTALLA*2, ANCHOPANTALLA);
+     Obstaculos miObstaculos2= new Obstaculos(ANCHOPANTALLA*2, 7*SEPARACION_COLUMNAS+ANCHOPANTALLA);
     
     static int ANCHOPANTALLA = 710;
     static int ALTOPANTALLA = 450;
@@ -105,6 +105,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         bufferGraphics.setColor(Color.BLACK);
         bufferGraphics.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
         
+         //Chequea el suelo y el techo
         for (int i = 0; i < misColumnas.length; i++){
         if (miPajaro.chequeaColision(misColumnas[i])){
             temporizador.stop();
@@ -112,10 +113,21 @@ public class VentanaJuego extends javax.swing.JFrame {
             miTemporizador.Detener();
             panelTiempoPerdido.setText(Integer.toString(miTemporizador.getSegundos()));
             relojAnimacion.setVisible(false);
-         }   
-        
-        
+         }
         }
+        
+        
+        // Chequea a los PACMAN    
+        if (miPajaro.chequeaColision2(miObstaculos) || (miPajaro.chequeaColision2(miObstaculos2))){
+            temporizador.stop();
+            ventanaGameOver.setVisible(true);
+            miTemporizador.Detener();
+            panelTiempoPerdido.setText(Integer.toString(miTemporizador.getSegundos()));
+            relojAnimacion.setVisible(false);
+         }
+        
+        
+        
         for (int j = 0; j < misColumnas.length; j++){
             misColumnas[j].mueve(bufferGraphics);
         }
@@ -149,6 +161,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         ventanaInicio = new javax.swing.JDialog();
         botonJugar = new javax.swing.JButton();
         botonExit = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         ventanaEstorbo = new javax.swing.JDialog();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -157,6 +170,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         estorboSI = new javax.swing.JButton();
         estorboNO = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
         texto = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -289,6 +303,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         );
 
         ventanaInicio.setResizable(false);
+        ventanaInicio.getContentPane().setLayout(null);
 
         botonJugar.setText("Jugar");
         botonJugar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -296,6 +311,8 @@ public class VentanaJuego extends javax.swing.JFrame {
                 botonJugarMousePressed(evt);
             }
         });
+        ventanaInicio.getContentPane().add(botonJugar);
+        botonJugar.setBounds(310, 180, 142, 54);
 
         botonExit.setText("Salir Para siempre de esta M....");
         botonExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -303,29 +320,13 @@ public class VentanaJuego extends javax.swing.JFrame {
                 botonExitMousePressed(evt);
             }
         });
+        ventanaInicio.getContentPane().add(botonExit);
+        botonExit.setBounds(463, 517, 243, 32);
 
-        javax.swing.GroupLayout ventanaInicioLayout = new javax.swing.GroupLayout(ventanaInicio.getContentPane());
-        ventanaInicio.getContentPane().setLayout(ventanaInicioLayout);
-        ventanaInicioLayout.setHorizontalGroup(
-            ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ventanaInicioLayout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(290, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        ventanaInicioLayout.setVerticalGroup(
-            ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
-                .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180)
-                .addComponent(botonExit)
-                .addContainerGap())
-        );
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/wallpaperarcade.png"))); // NOI18N
+        jLabel10.setText("jLabel10");
+        ventanaInicio.getContentPane().add(jLabel10);
+        jLabel10.setBounds(0, 0, 710, 560);
 
         jLabel5.setFont(new java.awt.Font("Phosphate", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 0, 0));
@@ -407,6 +408,17 @@ public class VentanaJuego extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel9))
                 .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -668,6 +680,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     private javax.swing.JButton estorboSI;
     private javax.swing.JLabel frasesAleatorias;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -682,6 +695,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel panelTemporizador;
     private javax.swing.JLabel panelTiempoPerdido;
     private javax.swing.JLabel relojAnimacion;

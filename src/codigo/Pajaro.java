@@ -57,12 +57,17 @@ public class Pajaro extends Ellipse2D.Double{
             yVelocidad = -2;
         }
     }
-    
+    // PAra Columnas
     public boolean chequeaColision(Columna c){
  
         return (this.intersects(c.capitel) || 
                 this.intersects(c.base) 
                 );
+    }
+    // Para el PAcman
+    public boolean chequeaColision2(Obstaculos o){
+ 
+       return (this.intersects(o.obstaculo));    
     }
 
 }
